@@ -1,4 +1,5 @@
 # WinAppleKey
+
 Apple Keyboard (model A1314 and A1644) Driver for Windows 10.
 
 ![keyboards](keyboards.png)
@@ -19,11 +20,9 @@ WinAppleKey is fully implemented as a HIDCLASS LowerFilter WDM kernel mode drive
 
 ![keyboard-driver-stack](keyboard-driver-stack.png)
 
-Sitting inbetween HIDCLASS and the bluetooth HID Transport driver; allows the interpretation of the input data 
+Sitting between HIDCLASS and the bluetooth HID Transport driver; allows the interpretation of the input data 
 before they reach HIDCLASS and get split out into TLC interfaces as HID Hot Buttons or as KBDClass (normal keys) input. 
 This allows full and proper re-mapping of all of the keys (incl. Fn, Eject), by also respecting typematic properties. 
-The older WinA1314 driver was not capable of that as it was implemented using *Francisco Lopes*'s [Interception](http://www.oblita.com/interception.html) driver, which is an UpperLevel filter KBDClass class driver. As a completely kernel-mode based implementation, it is also more secure than WinA1314 as it does not expose any keyboard input data to user mode. It also only attaches to the targeted keyboard device leaving the rest of your keyboard devices unaffected.
-
 
 ### Installation
 Due to the fact that the driver is signed with a self-signed test certificate, Windows will not allow the installation unless it is 
@@ -31,11 +30,11 @@ running in **TESTSIGNING** mode.
 
 Please make sure that you understand all the potential **[implications](https://msdn.microsoft.com/en-us/windows/hardware/drivers/install/the-testsigning-boot-configuration-option)** of running your system in TESTSIGNING mode as well as the fact that WinAppleKey is ***free software*** that you are willing to build and/or use completely ***at your own risk.***
 
-To set Windows in TESTSIGNING mode issue the following command in an Administrative command prompt and then reboot. Note that switching to TESTSIGNING mode will fail unless **Secure Boot** is off in your BIOS settings.
+To set Windows in TESTSIGNING mode you will need to issue the below command in an Administrative command prompt and then reboot. Note that switching to TESTSIGNING mode will fail with an error message if you are running Windows on UEFI BIOS, unless **Secure Boot** is turned off. In that case, you will need to reboot into your BIOS first and disable Secure Boot.
 
 ``` Bcdedit.exe -set TESTSIGNING ON ```
 
-You can then run the latest Setup.msi installer release from [releases](https://github.com/samartzidis/WinAppleKey/releases).
+You can now run the latest Setup.msi installer release from [releases](https://github.com/samartzidis/WinAppleKey/releases).
 
 To uninstall, run the uninstaller from the ```Control Panel``` ```Programs``` and then manually revert TESTSIGNING mode by issuing the following command (in an Administrative command prompt):
 
@@ -114,6 +113,9 @@ After changing any of these values, you will need to disconnect/connect your ass
 
 ### Build Instructions
 
-To build the driver you will need **Visual Studio 2015** along with an installation of the 
+To build the driver you will need **Visual Studio 2017** along with an installation of the 
   **Windows 10 Driver Kit (WDK)**. For the installer project, you will additionally need to install the **[WiX toolset](http://wixtoolset.org/)** version v3.10.3
   or better. 
+
+[![donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TBM5P9X6GZRCL)
+
